@@ -7,8 +7,7 @@ import uuid
 class BaseModel:
     """Defines the class BaseModel"""
     def __init__(self, *args, **kwargs):
-        "args won't be used"
-        "Initialize the class use kwargs"
+        "args won't be used, Initialize the class use kwargs"
         if kwargs:
             for key, val in kwargs.items():
                 if "created_at" == key:
