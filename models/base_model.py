@@ -7,6 +7,7 @@ import uuid
 class BaseModel:
     """Defines the class BaseModel"""
     def __init__(self, *args, **kwargs):
+        "args won't be used"
         "Initialize the class use kwargs"
 
         self.id = str(uuid.uuid4())
