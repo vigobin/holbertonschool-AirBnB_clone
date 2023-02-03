@@ -10,7 +10,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         "args won't be used"
         "Initialize the class use kwargs"
-        if not kwargs:
+        if kwargs:
              for key, val in kwargs.items():
                 if "created_at" == key:
                     self.created_at = datetime.strptime(kwargs["created_at"],
