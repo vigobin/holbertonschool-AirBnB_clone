@@ -1,17 +1,14 @@
 #!/usr/bin/python3
 """The BaseModel class"""
 from datetime import datetime
-import uuid 
-
 
 
 class BaseModel:
     """Defines the class BaseModel"""
     def __init__(self, *args, **kwargs):
-        "args won't be used"
-        "Initialize the class use kwargs"
+        "args won't be used, Initialize the class use kwargs"
         if kwargs:
-             for key, val in kwargs.items():
+            for key, val in kwargs.items():
                 if "created_at" == key:
                     self.created_at = datetime.strptime(kwargs["created_at"],
                                                         "%Y-%m-%dT%H:%M:%S.%f")
