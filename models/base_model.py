@@ -2,7 +2,7 @@
 """The BaseModel class"""
 from datetime import datetime
 import uuid 
-import storage_type
+
 
 
 class BaseModel:
