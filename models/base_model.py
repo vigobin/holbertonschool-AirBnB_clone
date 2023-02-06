@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """The BaseModel class"""
 from datetime import datetime
+import uuid
 
 
 class BaseModel:
