@@ -12,19 +12,15 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_quit(self, args):
-        """ exit the program"""
+        """Quit command to exit the program"""
         raise SystemExit
 
     def do_EOF(self, args):
-        """ exit the program"""
+        """EOF command to exit the program"""
         raise SystemExit
 
-    def do_help(self, args):
-        """lists commands"""
-        return super().do_help(args)
-
     def emptyline(self):
-        """ empty line + ENTER shouldn’t execute anything"""
+        """empty line + ENTER shouldn’t execute anything"""
         pass
 
 
