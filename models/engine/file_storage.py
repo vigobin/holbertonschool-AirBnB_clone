@@ -20,3 +20,13 @@ class FileStorage:
     class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
                   "Amenity": Amenity, "City": City, "Review": Review,
                   "State": State}
+
+    def all(self):
+        """returns the dictionary __objects"""
+        return FileStorage.__objects
+
+    def new(self, obj):
+        """sets in __objects the obj with key <obj class name>.id
+        """
+        obj_set = obj.__class__.__name__
+        FileStorage.__objects[{}] = obj
