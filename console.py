@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-Entry to command interpreter
+"""Entry to command interpreter
 """
 import cmd
 
