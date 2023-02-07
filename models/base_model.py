@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """The BaseModel class"""
 from datetime import datetime
-import uuid
+import uuid 
+import uuid4
+import models
+
 
 
 class BaseModel:
@@ -48,3 +51,9 @@ class BaseModel:
         '''deletes the current instance from the storage'''
         from models import storage
         storage.delete(self)
+
+    def __repr__(self):
+        """
+        returns string representation
+        """
+        return (self.__str__())
