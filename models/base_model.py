@@ -2,10 +2,6 @@
 """The BaseModel class"""
 from datetime import datetime
 import uuid 
-import uuid4
-import models
-
-
 
 class BaseModel:
     """Defines the class BaseModel"""
