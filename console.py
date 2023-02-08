@@ -3,6 +3,12 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.user import User
 import models
 import json
 
@@ -12,6 +18,9 @@ class HBNBCommand(cmd.Cmd):
     Defines functions of the command interpreter
     """
     prompt = '(hbnb) '
+    class_list = {'BaseModel': BaseModel, 'State': State, 'City': City,
+                  'Amenity': Amenity, 'Place': Place, 'Review': Review,
+                  'User': User}
 
     def do_quit(self, args):
         """Quit command to exit the program\n"""
@@ -29,56 +38,68 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseMode"""
         if args is None:
             print("** class name missing **")
-        elif args not in storage.classes():
+        elif not self.class_list.get(args):
             print("** class doesn't exist **")
         else:
-            class_instance = storage.classes()[args]()
-            class_instance.save()
-            print(class_instance.id)
+            obj = self.class_list[args]()
+            models.storage.save()
+            print(obj.id)
 
     def do_show(self, args):
         """ Prints the string representation of an instance"""
-        if args is None:
-            print("** class name missing **")
+        class_name, object_id = None, None
+        args = args.split(' ')
+        if len(args) > 0:
+            class_name = args[0]
+        if len(args) > 1:
+            object_id = args[1]
+        if not class_name:
+            print('** class name missing **')
+        elif not object_id:
+            print('** instance id missing **')
+        elif not self.class_list.get(class_name):
+            print("** class doesn't exist **")
         else:
-            parse = args.split(' ')
-            if parse[0] not in storage.classes():
-                print("** class doesn't exist **")
-            elif len(parse) < 2:
-                print("** instance id missing **")
+            c = class_name + "." + object_id
+            obj = models.storage.all().get(c)
+            if not obj:
+                print('** no instance found **')
             else:
-                key = parse[0] + "." + parse[1]
-                if key not in storage.all():
-                    print("** no instance found **")
-                else:
-                    print(storage.all()[key])
+                print(obj)
 
     def do_destroy(self, args):
         """Deletes an instance based on the class name and id"""
-        if args is None:
-            print("** class name missing **")
+        class_name, object_id = None, None
+        args = args.split(' ')
+        if len(args) > 0:
+            class_name = args[0]
+        if len(args) > 1:
+            object_id = args[1]
+        if not class_name:
+            print('** class name missing **')
+        elif not object_id:
+            print('** instance id missing **')
+        elif not self.class_list.get(class_name):
+            print("** class doesn't exist **")
         else:
-            parse = args.split(' ')
-            if parse[0] not in storage.classes():
-                print("** class doesn't exist **")
-            elif len(parse) < 2:
-                print("** instance id missing **")
+            c = class_name + "." + object_id
+            obj = models.storage.all().get(c)
+            if not obj:
+                print('** no instance found **')
             else:
-                key = parse[0] + "." + parse[1]
-                if key not in storage.all():
-                    print("** no instance found **")
-                else:
-                    del storage.all()[key]
-                    storage.save()
+                del models.storage.all()[c]
+                models.storage.save()
 
     def do_all(self, args):
         """ Prints all string representation of all instances"""
-        if args is None:
-            parse = args.split(' ')
-            if parse[0] not in storage.classes():
+        if not args:
+            print([str(value) for key, value in models.storage.all().items()])
+        else:
+            if not self.class_list.get(args):
                 print("** class doesn't exist **")
-            else:
-                print("")
+                return False
+            print([str(value) for key, value in models.storage.all().items()
+                   if type(value) is self.class_list.get(args)])
 
 
 if __name__ == '__main__':
