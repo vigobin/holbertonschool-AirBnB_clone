@@ -9,7 +9,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -17,36 +16,32 @@ class FileStorage:
 
     __file_path = 'file.json'
     __objects = {}
-    class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
-                  "Amenity": Amenity, "City": City, "Review": Review,
-                  "State": State}
 
     def all(self):
         """returns the dictionary __objects"""
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id
         """
-        a = "{}.{}".format(obj.__class__.__name__, obj.id)
-        type(self).__objects[a] = obj
+        k = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.__objects[k] = obj
 
     def save(self):
         """save obj dictionaries to file"""
-        my_dict = {}
-
-        for obj_set, obj in FileStorage.__objects.items():
-            my_dict[obj_set] = obj.to_dict()
+        a_dict = {}
+        for key, value in self.__objects.items():
+            a_dict[key] = value.to_dict()
         with open(self.__file_path, 'w') as f:
-            json.dump(my_dict, f)
+            f.write(json.dumps(a_dict))
 
     def reload(self):
         '''If json file exists, convert obj dicts back to instances'''
         try:
-            with open(FileStorage.__file_path, 'r') as f:
-                new_obj = json.load(f)
-            for key, val in new_obj.items():
-                obj = eval(val['__class__'])(**val)
-                FileStorage.__objects[key] = obj
+            with open(self.__file_path, 'r') as f:
+                new_dict = json.loads(f.read())
+            for key, val in new_dict.items():
+                b_obj = eval(val['__class__'])(**val)
+                self.__objects[key] = b_obj
         except FileNotFoundError:
             pass
