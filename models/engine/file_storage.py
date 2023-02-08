@@ -28,8 +28,8 @@ class FileStorage:
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id
         """
-        obj_set = obj.__class__.__name__
-        FileStorage.__objects[{}] = obj
+        a = "{}.{}".format(obj.__class__.__name__, obj.id)
+        type(self).__objects[a] = obj
 
     def save(self):
         """save obj dictionaries to file"""
