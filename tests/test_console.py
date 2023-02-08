@@ -2,9 +2,7 @@
 """A unit test module for the console (command interpreter).
 """
 import json
-import MySQLdb
 import os
-import sqlalchemy
 import unittest
 from io import StringIO
 from unittest.mock import patch
@@ -19,4 +17,3 @@ from tests import clear_stream
 class TestHBNBCommand(unittest.TestCase):
     """Represents the test class for the HBNBCommand class.
     """
-    

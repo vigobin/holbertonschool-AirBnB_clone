@@ -39,7 +39,7 @@ class FileStorage:
             my_dict[obj_set] = obj.to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(my_dict, f)
-    
+
     def reload(self):
         '''If json file exists, convert obj dicts back to instances'''
         try:
