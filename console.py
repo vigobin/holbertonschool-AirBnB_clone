@@ -121,7 +121,6 @@ class HBNBCommand(cmd.Cmd):
             if obj is None:
                 print("** no instance found **")
             else:
-
                 setattr(obj, args[2], args[3])
 
 
