@@ -36,14 +36,14 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """Creates a new instance of BaseMode"""
-        if args is None:
+        if len(args) == 0:
             print("** class name missing **")
-        elif not self.class_list.get(args):
-            print("** class doesn't exist **")
-        else:
+        elif args in self.class_list:
             obj = self.class_list[args]()
-            models.storage.save()
+            obj.save()
             print(obj.id)
+        else:
+            print("** class doesn't exist **")
 
     def do_show(self, args):
         """ Prints the string representation of an instance"""
@@ -101,6 +101,29 @@ class HBNBCommand(cmd.Cmd):
             print([str(value) for key, value in models.storage.all().items()
                    if type(value) is self.class_list.get(args)])
 
+    def do_update(self, args):
+        """Updates an instance based on the class name and id by adding or
+            updating attribute (save the change into the JSON file)"""
+        args = args.split(' ', 3)
+        if len(args) == 0:
+            print("** class name missing **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        elif len(args) == 2:
+            print("** attribute name missing **")
+        elif len(args) == 3:
+            print("** value missing **")
+        elif not self.class_list.get(args[0]):
+            print("** class doesn't exist **")
+        else:
+            k = args[0] + "." + args[1]
+            obj = storage.all().get(k)
+            if obj is None:
+                print("** no instance found **")
+            else:
 
-if __name__ == '__main__':
+                setattr(obj, args[2], args[3])
+
+
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
